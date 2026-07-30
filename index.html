@@ -622,7 +622,8 @@
       <h2>Serez-vous des nôtres ?</h2>
       <p class="sub">Merci de confirmer votre présence avant le 30 novembre 2026.</p>
 
-      <form id="rsvp-form" action="https://formsubmit.co/edenngouanda2025@gmail.com" method="POST">
+      <!-- Ce formulaire envoie chaque confirmation vers un Google Sheet via Apps Script. -->
+      <form id="rsvp-form" action="https://script.google.com/macros/s/AKfycbzbnGNQctqzJBkflY2R4iz3iCE_XXFY_xH8qlwv9-Kl6bQYnua-7o0251--1P-l5VO4/exec" method="POST">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
           <div class="field">
             <label for="prenom">Prénom</label>
@@ -636,7 +637,7 @@
 
         <div class="field">
           <label for="telephone">Téléphone</label>
-          <input type="tel" id="telephone" name="telephone" placeholder="+243 XX XXX XXXX" required />
+          <input type="tel" id="telephone" name="telephone" placeholder="+242 XX XXX XXXX" required />
         </div>
 
         <div class="field">
@@ -658,13 +659,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Champs cachés formsubmit.co (aucun compte requis) -->
-        <input type="hidden" name="_subject" value="✦ Nouvelle confirmation — Mariage Eden &amp; Gilsia 19/12/2026" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="text" name="_honey" style="display:none" />
-        <input type="hidden" name="_next" value="about:blank" />
 
         <button type="submit" class="submit-btn">Confirmer ma présence</button>
       </form>
@@ -736,23 +730,15 @@
 
       try {
         const data = new FormData(form);
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (res.ok) {
-          form.style.display = 'none';
-          success.style.display = 'block';
-        } else {
-          // Fallback: still show success for demo purposes
-          form.style.display = 'none';
-          success.style.display = 'block';
-        }
-      } catch {
+        // mode: 'no-cors' — Google Apps Script Web Apps don't return
+        // readable CORS headers, but the request still reaches the
+        // sheet; we don't need to read the response back.
+        await fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' });
         form.style.display = 'none';
         success.style.display = 'block';
+      } catch {
+        btn.textContent = 'Erreur, réessayer';
+        btn.disabled = false;
       }
     });
   </script>
