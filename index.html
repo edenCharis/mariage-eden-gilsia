@@ -89,21 +89,12 @@
       backdrop-filter: blur(8px);
     }
     .nav-logo {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 52px;
-      height: 52px;
-      border: 1px solid rgba(233,212,168,0.75);
-      border-radius: 50%;
       font-family: 'Great Vibes', cursive;
-      font-size: 1.45rem;
+      font-size: 2rem;
       color: inherit;
       text-decoration: none;
       line-height: 1;
-      transition: border-color 400ms ease, width 400ms ease, height 400ms ease;
     }
-    .nav.solid .nav-logo { border-color: var(--gold); width: 46px; height: 46px; }
     .nav-links { display: flex; gap: clamp(0.9rem, 3vw, 2.2rem); list-style: none; }
     .nav-links a {
       color: inherit;
@@ -440,8 +431,7 @@
 
     @media (max-width: 480px) {
       body { font-size: 17px; }
-      .nav-logo { width: 44px; height: 44px; font-size: 1.25rem; }
-      .nav.solid .nav-logo { width: 40px; height: 40px; }
+      .nav-logo { font-size: 1.7rem; }
       .nav-links a { font-size: 1.05rem; }
       .hero { padding-bottom: 3.5rem; }
       .name-row { grid-template-columns: 1fr; gap: 0; }
