@@ -88,7 +88,22 @@
       -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
     }
-    .nav-logo { font-family: 'Great Vibes', cursive; font-size: 1.9rem; color: inherit; text-decoration: none; line-height: 1; }
+    .nav-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      border: 1px solid rgba(233,212,168,0.75);
+      border-radius: 50%;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.45rem;
+      color: inherit;
+      text-decoration: none;
+      line-height: 1;
+      transition: border-color 400ms ease, width 400ms ease, height 400ms ease;
+    }
+    .nav.solid .nav-logo { border-color: var(--gold); width: 46px; height: 46px; }
     .nav-links { display: flex; gap: clamp(0.9rem, 3vw, 2.2rem); list-style: none; }
     .nav-links a {
       color: inherit;
@@ -98,7 +113,9 @@
       letter-spacing: 0.04em;
       opacity: 0.92;
     }
-    .nav-links a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 6px; }
+    .nav-links a { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; letter-spacing: 0.01em; }
+    .nav-links a:hover { opacity: 1; color: var(--gold-lt); }
+    .nav.solid .nav-links a:hover { color: var(--gold); }
 
     /* HERO */
     .hero {
@@ -113,7 +130,7 @@
       padding: 7rem 1.25rem 4.5rem;
       background:
         linear-gradient(180deg, rgba(20,16,12,0.45) 0%, rgba(20,16,12,0.15) 35%, rgba(20,16,12,0.55) 70%, rgba(20,16,12,0.8) 100%),
-        url("images/bague.jpg") center 56%/cover no-repeat;
+        url("images/bague.jpg") center 20%/cover no-repeat;
     }
     .hero-inner { max-width: 900px; }
     .hero-kicker {
@@ -191,8 +208,34 @@
     .head .script { font-size: clamp(3.2rem, 11vw, 5rem); color: var(--gold); }
     .head p { margin-top: 0.4rem; color: var(--soft); font-size: 1.1rem; }
 
-    /* VERSE */
-    .invite { max-width: 820px; text-align: center; }
+    /* PHOTO + VERSE */
+    .invite {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: clamp(2.5rem, 6vw, 5rem);
+      align-items: center;
+      text-align: center;
+    }
+    .photo-frame { position: relative; max-width: 400px; width: 100%; margin: 0 auto; }
+    .photo-frame::before {
+      content: '';
+      position: absolute;
+      inset: 18px -18px -18px 18px;
+      border: 1.5px solid var(--gold);
+      border-radius: 8px;
+    }
+    .photo-frame img {
+      position: relative;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 30px 60px -30px rgba(47,42,36,0.5);
+    }
+    @media (max-width: 760px) {
+      .invite { grid-template-columns: 1fr; }
+      .photo-frame { max-width: 320px; }
+      .photo-frame::before { inset: 12px -12px -12px 12px; }
+    }
     .verse {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
@@ -389,20 +432,17 @@
         width: 50%;
         background:
           linear-gradient(90deg, var(--ink) 0%, rgba(47,42,36,0) 18%),
-          url("images/bague.jpg") center 45%/cover no-repeat;
+          url("images/bague.jpg") center 20%/cover no-repeat;
       }
       .hero-inner { position: relative; z-index: 1; width: 50%; max-width: none; padding: 0 3rem; }
       .hero-names { font-size: clamp(5rem, 8.5vw, 8.5rem); }
     }
 
-    /* Tall phone screens: zoom the photo a little so the ring sits above the names */
-    @media (max-width: 899px) and (max-aspect-ratio: 3/4) {
-      .hero { background-size: auto, auto 125%; background-position: center, 50% 100%; }
-    }
     @media (max-width: 480px) {
       body { font-size: 17px; }
-      .nav-logo { font-size: 1.6rem; }
-      .nav-links a { font-size: 0.88rem; }
+      .nav-logo { width: 44px; height: 44px; font-size: 1.25rem; }
+      .nav.solid .nav-logo { width: 40px; height: 40px; }
+      .nav-links a { font-size: 1.05rem; }
       .hero { padding-bottom: 3.5rem; }
       .name-row { grid-template-columns: 1fr; gap: 0; }
     }
@@ -411,7 +451,7 @@
 <body>
 
   <nav class="nav" id="nav">
-    <a href="#top" class="nav-logo">E &amp; G</a>
+    <a href="#top" class="nav-logo" aria-label="Retour en haut">E&amp;G</a>
     <ul class="nav-links">
       <li><a href="#programme">Programme</a></li>
       <li><a href="#lieu">Lieu</a></li>
@@ -441,6 +481,9 @@
   <!-- INVITATION -->
   <section class="block reveal">
     <div class="container invite">
+      <div class="photo-frame">
+        <img src="images/demande.jpg" alt="La demande en mariage d'Eden à Gilsia" width="624" height="1080" loading="lazy"/>
+      </div>
       <blockquote class="verse">
         C'est pourquoi l'homme quittera son père et sa mère, et s'attachera à sa femme, et ils deviendront une seule chair.
         <cite>Genèse 2.24</cite>
