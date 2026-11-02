@@ -28,7 +28,15 @@
       --line:      rgba(168,135,79,0.3);
     }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+    }
+    html::-webkit-scrollbar { display: none; }
+
+    /* No blinking text caret outside the form fields */
+    body { caret-color: transparent; }
+    input, textarea { caret-color: var(--ink); }
 
     body {
       background: var(--bg);
